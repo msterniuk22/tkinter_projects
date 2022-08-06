@@ -15,9 +15,8 @@ Currently I am planning on making a weather app that displays accurate, up to da
 and a game, such as tic-tac-toe that you can play against the computer(interactively using tkinter)
 
 Skills being practiced:
--manipulating files and (possibly) security
-   -will be storing user names in files and importing various images, so this will be
-   a good way to practice file I/O and possibly encrypting the user data within the files
+-manipulating files and (possibly) security. I will be storing user data in files and using various images, 
+so this will be a good way to practice file I/O and possibly encrypting the user data within the files
    
 -tkinter. building an interface with many interacting windows, widgets, and passable aesthetics
 should be an ample test and a suitable barrier to clear to say that I have a working knowledge of tkinter
