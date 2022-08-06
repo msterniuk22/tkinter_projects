@@ -1,7 +1,7 @@
 # tkinter_projects
 will host my various tkinter projects and track my progress. began learning tkinter 8/2/22. 
 I'm aiming to create a series of smaller projects and read the tkinter documentation first, but
-will finish my original learning of the tkinter module by attempting to build an interface
+will complete my initial learning phase of the tkinter module by attempting to build an interface
 for various apps. It should be comprehensive and be comprised of 3+ main parts:
 
 -the login page. this should be a home page that allows users to register for an account
