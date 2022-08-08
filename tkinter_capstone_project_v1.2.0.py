@@ -17,6 +17,9 @@ from tkinter import messagebox
 from PIL import ImageTk, Image
 import random
 
+image = Image.open("tic_tac_toe_O.jpeg")
+image2 = Image.open("tic_tac_toe_X.png")
+
 #creates the main class
 class app_interface():
 
@@ -28,6 +31,8 @@ class app_interface():
         self.root = root_window
         self.ttt_user_moves = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
         self.ttt_comp_moves = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']]
+        self.O_photo = ImageTk.PhotoImage(image.resize((40, 40), Image.ANTIALIAS))
+        self.X_photo = ImageTk.PhotoImage(image2.resize((40, 40), Image.ANTIALIAS))
         login_page_frame = ttk.Frame(self.root, width = 150, height = 100)
 
         #all the labels
@@ -180,6 +185,7 @@ class app_interface():
         #creates a new window and withdraws options window
         ttt_window = tk.Toplevel(self.root)
         self.catalog_window.withdraw()
+        ttt_window.geometry("+500-350")
         master_frame = ttk.Frame(ttt_window, width=500, height=500, relief='sunken', borderwidth=10)
 
         # creating the 9 squares to play on
@@ -195,15 +201,15 @@ class app_interface():
 
         aval_moves = [i for i in range(9)]
 
-        label0 = ttk.Label(frame_0, text='0')
-        label1 = ttk.Label(frame_1, text='1')
-        label2 = ttk.Label(frame_2, text='2')
-        label3 = ttk.Label(frame_3, text='3')
-        label4 = ttk.Label(frame_4, text='4')
-        label5 = ttk.Label(frame_5, text='5')
-        label6 = ttk.Label(frame_6, text='6')
-        label7 = ttk.Label(frame_7, text='7')
-        label8 = ttk.Label(frame_8, text='8')
+        label0 = ttk.Label(frame_0, image = self.X_photo)
+        label1 = ttk.Label(frame_1, image = self.X_photo)
+        label2 = ttk.Label(frame_2, image = self.X_photo)
+        label3 = ttk.Label(frame_3, image = self.X_photo)
+        label4 = ttk.Label(frame_4, image = self.X_photo)
+        label5 = ttk.Label(frame_5, image = self.X_photo)
+        label6 = ttk.Label(frame_6, image = self.X_photo)
+        label7 = ttk.Label(frame_7, image = self.X_photo)
+        label8 = ttk.Label(frame_8, image = self.X_photo)
 
         frame_0.grid(column=0, row=0, padx=5, pady=5, sticky='w')
         frame_1.grid(column=1, row=0, padx=5, pady=5, sticky='n')
@@ -216,6 +222,17 @@ class app_interface():
         frame_8.grid(column=2, row=2, padx=5, pady=5, sticky='e')
         master_frame.grid(column=0, row=0)
 
+        #preventing frames from changing dimensions
+        frame_0.grid_propagate('False')
+        frame_1.grid_propagate('False')
+        frame_2.grid_propagate('False')
+        frame_3.grid_propagate('False')
+        frame_4.grid_propagate('False')
+        frame_5.grid_propagate('False')
+        frame_6.grid_propagate('False')
+        frame_7.grid_propagate('False')
+        frame_8.grid_propagate('False')
+
         def insert_new_move(move, player):
             #take the move and the place it came from
             #insert that into respective list
@@ -224,16 +241,13 @@ class app_interface():
                 for lists in self.ttt_comp_moves:
                     for ele in lists:
                         iter_lst.append(ele)
-                print('ITER LST ', iter_lst)
                 iter_lst[move] = move
                 self.ttt_comp_moves.clear()
                 self.ttt_comp_moves.append(iter_lst[0:3])
                 self.ttt_comp_moves.append(iter_lst[3:6])
                 self.ttt_comp_moves.append(iter_lst[6:9])
-                print('SELF COMP MOVES', self.ttt_comp_moves)
 
             elif player == 'User':
-                print('TOP USER MOVES', self.ttt_user_moves)
                 iter_lst = []
                 for lists in self.ttt_user_moves:
                     for ele in lists:
@@ -243,8 +257,6 @@ class app_interface():
                 self.ttt_user_moves.append(iter_lst[0:3])
                 self.ttt_user_moves.append(iter_lst[3:6])
                 self.ttt_user_moves.append(iter_lst[6:9])
-                print('BOTTOM USER MOVES', self.ttt_user_moves)
-                print('ITER LST', iter_lst)
 
 
         def determine_winner():
@@ -277,7 +289,6 @@ class app_interface():
             given_index = 0
             iter_progress = 0
             flattened_list = []
-            print("USER MOVES IN VERT USER SIDE", self.ttt_user_moves)
             for lists in self.ttt_user_moves:
                 for ele in lists:
                     flattened_list.append(ele)
@@ -287,7 +298,6 @@ class app_interface():
                 for _ in range(3):
                     checker_list.append(flattened_list[given_index])
                     given_index += 3
-                print("CHECKER LIST AT END OF LOOP", checker_list)
                 iter_progress += 1
                 int_count = 0
                 for ele in checker_list:
@@ -302,7 +312,6 @@ class app_interface():
             given_index = 0
             iter_progress = 0
             flattened_list = []
-            print("COMP MOVES IN VERT COMP SIDE", self.ttt_comp_moves)
             for lists in self.ttt_comp_moves:
                 for ele in lists:
                     flattened_list.append(ele)
@@ -312,7 +321,6 @@ class app_interface():
                 for _ in range(3):
                     checker_list.append(flattened_list[given_index])
                     given_index += 3
-                print("CHECKER LIST AT END OF LOOP(comp)", checker_list)
                 iter_progress += 1
                 int_count = 0
                 for ele in checker_list:
@@ -379,7 +387,6 @@ class app_interface():
                 try:
                     aval_moves.remove(0)
                     label0.grid()
-                    frame_0.grid_propagate('False')
                     insert_new_move(0, 'User')
                     determine_winner()
                     computer_move()
@@ -390,7 +397,6 @@ class app_interface():
                 try:
                     aval_moves.remove(1)
                     label1.grid()
-                    frame_1.grid_propagate('False')
                     insert_new_move(1, 'User')
                     determine_winner()
                     computer_move()
@@ -401,7 +407,6 @@ class app_interface():
                 try:
                     aval_moves.remove(2)
                     label2.grid()
-                    frame_2.grid_propagate('False')
                     insert_new_move(2, 'User')
                     determine_winner()
                     computer_move()
@@ -412,7 +417,6 @@ class app_interface():
                 try:
                     aval_moves.remove(3)
                     label3.grid()
-                    frame_3.grid_propagate('False')
                     insert_new_move(3, 'User')
                     determine_winner()
                     computer_move()
@@ -423,7 +427,6 @@ class app_interface():
                 try:
                     aval_moves.remove(4)
                     label4.grid()
-                    frame_4.grid_propagate('False')
                     insert_new_move(4, 'User')
                     determine_winner()
                     computer_move()
@@ -434,7 +437,6 @@ class app_interface():
                 try:
                     aval_moves.remove(5)
                     label5.grid()
-                    frame_5.grid_propagate('False')
                     insert_new_move(5, 'User')
                     determine_winner()
                     computer_move()
@@ -444,7 +446,6 @@ class app_interface():
                 try:
                     aval_moves.remove(6)
                     label6.grid()
-                    frame_6.grid_propagate('False')
                     insert_new_move(6, 'User')
                     determine_winner()
                     computer_move()
@@ -455,7 +456,7 @@ class app_interface():
                 try:
                     aval_moves.remove(7)
                     label7.grid()
-                    frame_7.grid_propagate('False')
+                    frame_7.propagate(0)
                     insert_new_move(7, 'User')
                     determine_winner()
                     computer_move()
@@ -466,7 +467,6 @@ class app_interface():
                 try:
                     aval_moves.remove(8)
                     label8.grid()
-                    frame_8.grid_propagate('False')
                     insert_new_move(8, 'User')
                     determine_winner()
                     computer_move()
@@ -505,10 +505,14 @@ class app_interface():
                 return "key doesn't exist"
 
             insert_frame = get_key(comp_move[0])
-            test_label = ttk.Label(insert_frame, text = 'computer')
+
+            #had to create photo as a obj attr(self.O_photo)
+            #because tkinter garbage collects images nested with a function
+            display_label = ttk.Label(insert_frame, image = self.O_photo)
+            display_label.grid()
+            insert_frame.grid_propagate('False')
             aval_moves.remove(comp_move[0])
             insert_new_move(comp_move[0], 'Computer')
-            test_label.grid()
             determine_winner()
 
         #if the user tries to X out of cur window, exits the program entirely
@@ -516,7 +520,6 @@ class app_interface():
 
         def destroy_root():
             self.root.destroy()
-            print('aval_moves is', aval_moves)
 
         user_move()
 
@@ -535,4 +538,3 @@ class app_interface():
 root = tk.Tk()
 obj = app_interface(root)
 root.mainloop()
-
